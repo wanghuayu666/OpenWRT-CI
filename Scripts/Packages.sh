@@ -35,10 +35,16 @@ UPDATE_PACKAGE() {
         fi
     done
 
+    # 删除现有的 lucky 目录（如果存在）
+    if [ -d "$REPO_NAME" ]; then
+        echo "$REPO_NAME directory already exists. Removing it."
+        rm -rf $REPO_NAME
+    fi
+
     # 克隆 GitHub 仓库并指定标签 v2.14.0
     git clone --depth=1 --single-branch --branch $PKG_TAG "https://github.com/$PKG_REPO.git"
 
-    # 如果要指定标签版本，切换到指定的标签
+    # 切换到指定标签版本
     cd $REPO_NAME
     git checkout $PKG_TAG  # 切换到指定标签 v2.14.0
     cd ..
@@ -52,7 +58,7 @@ UPDATE_PACKAGE() {
     fi
 }
 
-# 调用示例
+# 调用示例：只需调用一次，指定需要的标签版本
 UPDATE_PACKAGE "lucky" "gdy666/lucky" "v2.14.0" "tag" ""  # 使用v2.14.0标签编译lucky插件
 
 # 其他插件
@@ -65,13 +71,6 @@ UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 
 # 添加 ttyd 插件
 UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "main" "pkg"
-
-# 添加 luci-app-lucky 插件
-UPDATE_PACKAGE "lucky" "gdy666/lucky" "v2.14.0" "tag" ""  # 这里指定了 'tag' 参数来使用指定的标签版本
-
-if [[ $WRT_REPO != *"immortalwrt"* ]]; then
-    UPDATE_PACKAGE "qmi-wwan" "immortalwrt/wwan-packages" "master" "pkg"
-fi
 
 # 更新软件包版本
 UPDATE_VERSION() {
