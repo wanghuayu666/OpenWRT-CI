@@ -41,12 +41,17 @@ UPDATE_PACKAGE() {
         rm -rf $REPO_NAME
     fi
 
-    # 克隆 GitHub 仓库并指定标签 v2.14.0
+    # 如果是 lucky 插件，使用 pkg 方式
+    if [[ $PKG_NAME == "lucky" ]]; then
+        PKG_SPECIAL="pkg"  # 对 lucky 插件使用 pkg 处理方式
+    fi
+
+    # 克隆 GitHub 仓库并指定标签或分支
     git clone --depth=1 --single-branch --branch $PKG_TAG "https://github.com/$PKG_REPO.git"
 
     # 切换到指定标签版本
     cd $REPO_NAME
-    git checkout $PKG_TAG  # 切换到指定标签 v2.14.0
+    git checkout $PKG_TAG  # 切换到指定标签或分支
     cd ..
 
     # 处理克隆的仓库
@@ -58,8 +63,8 @@ UPDATE_PACKAGE() {
     fi
 }
 
-# 调用示例：只需调用一次，指定需要的标签版本
-UPDATE_PACKAGE "lucky" "gdy666/lucky" "v2.14.0" "tag" ""  # 使用v2.14.0标签编译lucky插件
+# 调用示例：lucky插件改为使用 pkg 方式处理
+UPDATE_PACKAGE "lucky" "gdy666/lucky" "master" "pkg" ""  # 使用 master 分支，pkg 方式处理 lucky 插件
 
 # 其他插件
 UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-24.10"
