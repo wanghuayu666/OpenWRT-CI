@@ -64,10 +64,11 @@ UPDATE_PACKAGE() {
 }
 
 # 调用示例：lucky插件改为使用 pkg 方式处理
-UPDATE_PACKAGE "lucky" "gdy666/lucky" "master" "pkg" ""  # 使用 master 分支，pkg 方式处理 lucky 插件
+UPDATE_PACKAGE "lucky" "gdy666/lucky" "master"    # 使用 master 分支，pkg 方式处理 lucky 插件
 
 # 其他插件
 UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-24.10"
+UPDATE_PACKAGE "nikki" "nikkinikki-org/OpenWrt-nikki" "main"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev" "pkg"
 UPDATE_PACKAGE "luci-app-wol" "VIKINGYFY/packages" "main" "pkg"
 UPDATE_PACKAGE "gecoosac" "lwb1978/openwrt-gecoosac" "main"
