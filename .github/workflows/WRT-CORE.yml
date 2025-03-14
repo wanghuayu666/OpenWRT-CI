@@ -1,4 +1,3 @@
-#云编译公用核心
 name: WRT-CORE
 
 on:
@@ -50,8 +49,8 @@ env:
   WRT_WORD: ${{inputs.WRT_WORD}}
   WRT_IP: ${{inputs.WRT_IP}}
   WRT_PW: ${{inputs.WRT_PW}}
-  WRT_REPO: ${{inputs.WRT_REPO}}
-  WRT_BRANCH: ${{inputs.WRT_BRANCH}}
+  WRT_REPO: "https://github.com/immortalwrt/immortalwrt.git"  # 修改为新的仓库链接
+  WRT_BRANCH: "openwrt-24.10"  # 修改为新的分支
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
 
