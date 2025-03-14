@@ -53,19 +53,17 @@ UPDATE_PACKAGE() {
 
 # UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
 UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-24.10"
-
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev" "pkg"
-
-
 UPDATE_PACKAGE "luci-app-wol" "VIKINGYFY/packages" "main" "pkg"
-
-
 UPDATE_PACKAGE "gecoosac" "lwb1978/openwrt-gecoosac" "main"
 UPDATE_PACKAGE "qmodem" "FUjr/modem_feeds" "main"
 UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 
 # 添加 ttyd 插件
 UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "master" "pkg"
+
+# 添加 luci-app-lucky 插件
+UPDATE_PACKAGE "luci-app-lucky" "gdy666/luci-app-lucky" "master" "pkg"
 
 if [[ $WRT_REPO != *"immortalwrt"* ]]; then
     UPDATE_PACKAGE "qmi-wwan" "immortalwrt/wwan-packages" "master" "pkg"
