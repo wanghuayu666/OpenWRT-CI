@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#安装和更新软件包
+# 安装和更新软件包
 UPDATE_PACKAGE() {
     local PKG_NAME=$1
     local PKG_REPO=$2
-    local PKG_BRANCH=$3
+    local PKG_TAG=$3  # 使用标签版本
     local PKG_SPECIAL=$4
     local CUSTOM_NAMES=($5)  # 第5个参数为自定义名称列表
     local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
@@ -35,8 +35,13 @@ UPDATE_PACKAGE() {
         fi
     done
 
-    # 克隆 GitHub 仓库
-    git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
+    # 克隆 GitHub 仓库并指定标签 v2.14.0
+    git clone --depth=1 --single-branch --branch $PKG_TAG "https://github.com/$PKG_REPO.git"
+
+    # 如果要指定标签版本，切换到指定的标签
+    cd $REPO_NAME
+    git checkout $PKG_TAG  # 切换到指定标签 v2.14.0
+    cd ..
 
     # 处理克隆的仓库
     if [[ $PKG_SPECIAL == "pkg" ]]; then
@@ -48,10 +53,9 @@ UPDATE_PACKAGE() {
 }
 
 # 调用示例
-# UPDATE_PACKAGE "OpenAppFilter" "destan19/OpenAppFilter" "master" "" "custom_name1 custom_name2"
-# UPDATE_PACKAGE "open-app-filter" "destan19/OpenAppFilter" "master" "" "luci-app-appfilter oaf" 这样会把原有的open-app-filter，luci-app-appfilter，oaf相关组件删除，不会出现coremark错误。
+UPDATE_PACKAGE "lucky" "gdy666/lucky" "v2.14.0" "tag" ""  # 使用v2.14.0标签编译lucky插件
 
-# UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
+# 其他插件
 UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-24.10"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev" "pkg"
 UPDATE_PACKAGE "luci-app-wol" "VIKINGYFY/packages" "main" "pkg"
@@ -63,13 +67,13 @@ UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "main" "pkg"
 
 # 添加 luci-app-lucky 插件
-UPDATE_PACKAGE "lucky" "gdy666/lucky" "master" "pkg"
+UPDATE_PACKAGE "lucky" "gdy666/lucky" "v2.14.0" "tag" ""  # 这里指定了 'tag' 参数来使用指定的标签版本
 
 if [[ $WRT_REPO != *"immortalwrt"* ]]; then
     UPDATE_PACKAGE "qmi-wwan" "immortalwrt/wwan-packages" "master" "pkg"
 fi
 
-#更新软件包版本
+# 更新软件包版本
 UPDATE_VERSION() {
     local PKG_NAME=$1
     local PKG_MARK=${2:-false}
@@ -110,6 +114,6 @@ UPDATE_VERSION() {
     done
 }
 
-#UPDATE_VERSION "软件包名" "测试版，true，可选，默认为否"
+# UPDATE_VERSION "软件包名" "测试版，true，可选，默认为否"
 UPDATE_VERSION "sing-box"
 UPDATE_VERSION "tailscale"
