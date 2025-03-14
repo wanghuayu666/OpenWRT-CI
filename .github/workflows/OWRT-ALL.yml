@@ -20,6 +20,9 @@ on:
         default: 'false'
         required: false
         type: boolean
+  #定时自动编译：每周五凌晨4点（中国时区）
+  schedule:
+    - cron: "0 20 * * 5"  # 每周五 UTC 20:00（中国时区周五凌晨 4 点）
 
 #CI权限
 permissions: write-all
