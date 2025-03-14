@@ -60,10 +60,10 @@ UPDATE_PACKAGE "qmodem" "FUjr/modem_feeds" "main"
 UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 
 # 添加 ttyd 插件
-UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "master" "pkg"
+UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "main" "pkg"
 
 # 添加 luci-app-lucky 插件
-UPDATE_PACKAGE "luci-app-lucky" "gdy666/luci-app-lucky" "master" "pkg"
+UPDATE_PACKAGE "lucky" "gdy666/lucky" "master" "pkg"
 
 if [[ $WRT_REPO != *"immortalwrt"* ]]; then
     UPDATE_PACKAGE "qmi-wwan" "immortalwrt/wwan-packages" "master" "pkg"
