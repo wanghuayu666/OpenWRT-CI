@@ -49,8 +49,8 @@ env:
   WRT_WORD: ${{inputs.WRT_WORD}}
   WRT_IP: ${{inputs.WRT_IP}}
   WRT_PW: ${{inputs.WRT_PW}}
-  WRT_REPO: "https://github.com/VIKINGYFY/immortalwrt.git"  # 修改为新的仓库链接
-  WRT_BRANCH: "owrt"  # 修改为新的分支
+  WRT_REPO: "https://github.com/Lienol/openwrt.git"  # 修改为新的仓库链接
+  WRT_BRANCH: "24.10"  # 修改为新的分支
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
 
