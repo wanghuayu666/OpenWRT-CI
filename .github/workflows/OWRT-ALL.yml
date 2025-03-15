@@ -36,8 +36,8 @@ jobs:
       #max-parallel: 3
       matrix:
         CONFIG: [X86]
-        SOURCE: [VIKINGYFY/immortalwrt]  # 这里改回为旧的仓库
-        BRANCH: [owrt]  # 分支改回为 owrt
+        SOURCE: [Lienol/openwrt]  # 这里改为 Lienol/openwrt 仓库
+        BRANCH: [24.10]  # 分支改为 24.10
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
