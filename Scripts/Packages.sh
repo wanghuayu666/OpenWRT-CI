@@ -43,7 +43,7 @@ UPDATE_PACKAGE() {
 
     # 如果是 lucky 插件，使用 pkg 方式
     if [[ $PKG_NAME == "lucky" ]]; then
-        PKG_SPECIAL="pkg"  # 对 lucky 插件使用 pkg 处理方式
+        PKG_SPECIAL="master"  # 对 lucky 插件使用 pkg 处理方式
     fi
 
     # 克隆 GitHub 仓库并指定标签或分支
@@ -76,7 +76,7 @@ UPDATE_PACKAGE "qmodem" "FUjr/modem_feeds" "main"
 UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 
 # 添加 ttyd 插件
-UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "main" "pkg"
+UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "main"
 
 # 更新软件包版本
 UPDATE_VERSION() {
