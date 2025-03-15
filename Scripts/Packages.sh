@@ -72,11 +72,11 @@ UPDATE_PACKAGE "nikki" "nikkinikki-org/OpenWrt-nikki" "main"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev" "pkg"
 UPDATE_PACKAGE "luci-app-wol" "VIKINGYFY/packages" "main" "pkg"
 UPDATE_PACKAGE "gecoosac" "lwb1978/openwrt-gecoosac" "main"
-UPDATE_PACKAGE "qmodem" "FUjr/modem_feeds" "main"
+#UPDATE_PACKAGE "qmodem" "FUjr/modem_feeds" "main"
 UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 
 # 添加 ttyd 插件
-UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "main"
+#UPDATE_PACKAGE "ttyd" "tsl0922/ttyd" "main"
 
 # 更新软件包版本
 UPDATE_VERSION() {
