@@ -27,7 +27,7 @@ if [ -n "$WRT_PACKAGE" ]; then
 fi
 
 # 配置网口
-NETWORK_CFG="./package/base-files/files/etc/config/network"
+NETWORK_CFG="./package/base-files/files/bin/config_generate"
 
 # 配置 eth0 和 eth3 绑定为 br-lan 网桥
 sed -i "/config interface 'lan'/a\    option ifname 'eth0 eth3'" $NETWORK_CFG
