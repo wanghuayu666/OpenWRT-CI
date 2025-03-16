@@ -1,4 +1,3 @@
-
 #CI项目
 name: OWRT-ALL
 
@@ -38,7 +37,7 @@ jobs:
       matrix:
         CONFIG: [X86]
         SOURCE: [immortalwrt/immortalwrt]  # 这里改回为旧的仓库
-        BRANCH: [master]  # 分支改回为 owrt
+        BRANCH: [v24.10.0]  # 修改为使用标签 v24.10.0
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
@@ -60,7 +59,7 @@ jobs:
       #源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git  # 这个链接会根据 SOURCE 变量更新
       #源码分支
-      WRT_BRANCH: ${{matrix.BRANCH}}  # 这个分支会根据 BRANCH 变量更新
+      WRT_BRANCH: ${{matrix.BRANCH}}  # 这个分支会根据 BRANCH 变量更新（现在是标签）
       #源码名称
       WRT_SOURCE: ${{matrix.SOURCE}}
       #插件调整
