@@ -35,11 +35,6 @@ UPDATE_PACKAGE() {
         fi
     done
 
-    # 删除现有的 lucky 目录（如果存在）
-    if [ -d "$REPO_NAME" ]; then
-        echo "$REPO_NAME directory already exists. Removing it."
-        rm -rf $REPO_NAME
-    fi
 
     # 如果是 lucky 插件，使用 pkg 方式
     if [[ $PKG_NAME == "lucky" ]]; then
