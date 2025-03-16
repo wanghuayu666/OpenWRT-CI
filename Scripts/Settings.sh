@@ -44,3 +44,8 @@ sed -i "/config interface 'wan1'/a\    option ifname 'eth2'" $NETWORK_CFG
 sed -i "/config interface 'wan1'/a\    option proto 'pppoe'" $NETWORK_CFG
 sed -i "/config interface 'wan1'/a\    option username '$WRT_WAN1_USER'" $NETWORK_CFG
 sed -i "/config interface 'wan1'/a\    option password '$WRT_WAN1_PASSWORD'" $NETWORK_CFG
+
+# 配置 LAN 口 DHCP 从 192.168.88.10 开始
+sed -i "/config interface 'lan'/a\    option start '10'" $NETWORK_CFG
+sed -i "/config interface 'lan'/a\    option limit '100'" $NETWORK_CFG
+sed -i "/config interface 'lan'/a\    option leasetime '12h'" $NETWORK_CFG
