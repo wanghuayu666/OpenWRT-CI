@@ -50,7 +50,7 @@ env:
   WRT_IP: ${{inputs.WRT_IP}}
   WRT_PW: ${{inputs.WRT_PW}}
   WRT_REPO: "https://github.com/immortalwrt/immortalwrt.git"  # 设置源码仓库链接
-  WRT_BRANCH: "master"  # 设置源码分支为 master
+  WRT_BRANCH: "v24.10.0"  # 设置源码标签为 v24.10.0
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
 
@@ -94,6 +94,7 @@ jobs:
 
       - name: Clone Code
         run: |
+          # Clone the repository using the tag 'v24.10.0' instead of a branch
           git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_REPO ./wrt/
 
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
