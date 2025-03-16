@@ -30,22 +30,25 @@ fi
 NETWORK_CFG="./package/base-files/files/bin/config_generate"
 
 # 配置 eth0 和 eth3 绑定为 br-lan 网桥
-sed -i "/config interface 'lan'/a\    option ifname 'eth0 eth3'" $NETWORK_CFG
-sed -i "/config interface 'lan'/a\    option type 'bridge'" $NETWORK_CFG
+uci set network.lan.ifname='eth0 eth3'
+uci set network.lan.type='bridge'
 
 # 配置 eth1 为 WAN 口，拨号模式 (假设使用 PPPoE)
-sed -i "/config interface 'wan'/a\    option ifname 'eth1'" $NETWORK_CFG
-sed -i "/config interface 'wan'/a\    option proto 'pppoe'" $NETWORK_CFG
-sed -i "/config interface 'wan'/a\    option username '$WRT_WAN_USER'" $NETWORK_CFG
-sed -i "/config interface 'wan'/a\    option password '$WRT_WAN_PASSWORD'" $NETWORK_CFG
+uci set network.wan.ifname='eth1'
+uci set network.wan.proto='pppoe'
+uci set network.wan.username="$WRT_WAN_USER"
+uci set network.wan.password="$WRT_WAN_PASSWORD"
 
 # 配置 eth2 为 WAN1 口，拨号模式 (假设使用 PPPoE)
-sed -i "/config interface 'wan1'/a\    option ifname 'eth2'" $NETWORK_CFG
-sed -i "/config interface 'wan1'/a\    option proto 'pppoe'" $NETWORK_CFG
-sed -i "/config interface 'wan1'/a\    option username '$WRT_WAN1_USER'" $NETWORK_CFG
-sed -i "/config interface 'wan1'/a\    option password '$WRT_WAN1_PASSWORD'" $NETWORK_CFG
+uci set network.wan1.ifname='eth2'
+uci set network.wan1.proto='pppoe'
+uci set network.wan1.username="$WRT_WAN1_USER"
+uci set network.wan1.password="$WRT_WAN1_PASSWORD"
 
 # 配置 LAN 口 DHCP 从 192.168.88.10 开始
-sed -i "/config interface 'lan'/a\    option start '10'" $NETWORK_CFG
-sed -i "/config interface 'lan'/a\    option limit '100'" $NETWORK_CFG
-sed -i "/config interface 'lan'/a\    option leasetime '12h'" $NETWORK_CFG
+uci set network.lan.start='10'
+uci set network.lan.limit='100'
+uci set network.lan.leasetime='12h'
+
+# 提交网络配置更改
+uci commit network
