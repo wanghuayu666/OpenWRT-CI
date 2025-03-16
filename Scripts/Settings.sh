@@ -9,24 +9,6 @@ sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.88.1/g" $(find ./feeds/luci/modules/l
 # 添加编译日期标识
 sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_MARK-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 
-WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh")
-WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
-if [ -f "$WIFI_SH" ]; then
-    # 修改 WIFI 名称
-    sed -i "s/BASE_SSID='.*'/BASE_SSID='$WRT_SSID'/g" $WIFI_SH
-    # 修改 WIFI 密码
-    sed -i "s/BASE_WORD='.*'/BASE_WORD='$WRT_WORD'/g" $WIFI_SH
-elif [ -f "$WIFI_UC" ]; then
-    # 修改 WIFI 名称
-    sed -i "s/ssid='.*'/ssid='$WRT_SSID'/g" $WIFI_UC
-    # 修改 WIFI 密码
-    sed -i "s/key='.*'/key='$WRT_WORD'/g" $WIFI_UC
-    # 修改 WIFI 地区
-    sed -i "s/country='.*'/country='CN'/g" $WIFI_UC
-    # 修改 WIFI 加密
-    sed -i "s/encryption='.*'/encryption='psk2+ccmp'/g" $WIFI_UC
-fi
-
 CFG_FILE="./package/base-files/files/bin/config_generate"
 # 修改默认 IP 地址为 192.168.88.1
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/192.168.88.1/g" $CFG_FILE
@@ -44,17 +26,21 @@ if [ -n "$WRT_PACKAGE" ]; then
     echo -e "$WRT_PACKAGE" >> ./.config
 fi
 
-# 高通平台调整
-DTS_PATH="./target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/"
-if [[ $WRT_TARGET == *"QUALCOMMAX"* ]]; then
-    # 取消 nss 相关 feed
-    echo "CONFIG_FEED_nss_packages=n" >> ./.config
-    echo "CONFIG_FEED_sqm_scripts_nss=n" >> ./.config
-    # 设置 NSS 版本
-    echo "CONFIG_NSS_FIRMWARE_VERSION_11_4=n" >> ./.config
-    echo "CONFIG_NSS_FIRMWARE_VERSION_12_2=y" >> ./.config
-    # 无 WIFI 配置调整 Q6 大小
-    if [[ "${WRT_CONFIG,,}" == *"wifi"* && "${WRT_CONFIG,,}" == *"no"* ]]; then
-        find $DTS_PATH -type f ! -iname '*nowifi*' -exec sed -i 's/ipq\(6018\|8074\)\.dtsi/ipq\1-nowifi.dtsi/g' {} +
-    fi
-fi
+# 配置网口
+NETWORK_CFG="./package/base-files/files/etc/config/network"
+
+# 配置 eth0 和 eth3 绑定为 br-lan 网桥
+sed -i "/config interface 'lan'/a\    option ifname 'eth0 eth3'" $NETWORK_CFG
+sed -i "/config interface 'lan'/a\    option type 'bridge'" $NETWORK_CFG
+
+# 配置 eth1 为 WAN 口，拨号模式 (假设使用 PPPoE)
+sed -i "/config interface 'wan'/a\    option ifname 'eth1'" $NETWORK_CFG
+sed -i "/config interface 'wan'/a\    option proto 'pppoe'" $NETWORK_CFG
+sed -i "/config interface 'wan'/a\    option username '$WRT_WAN_USER'" $NETWORK_CFG
+sed -i "/config interface 'wan'/a\    option password '$WRT_WAN_PASSWORD'" $NETWORK_CFG
+
+# 配置 eth2 为 WAN1 口，拨号模式 (假设使用 PPPoE)
+sed -i "/config interface 'wan1'/a\    option ifname 'eth2'" $NETWORK_CFG
+sed -i "/config interface 'wan1'/a\    option proto 'pppoe'" $NETWORK_CFG
+sed -i "/config interface 'wan1'/a\    option username '$WRT_WAN1_USER'" $NETWORK_CFG
+sed -i "/config interface 'wan1'/a\    option password '$WRT_WAN1_PASSWORD'" $NETWORK_CFG
