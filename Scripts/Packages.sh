@@ -35,12 +35,6 @@ UPDATE_PACKAGE() {
         fi
     done
 
-
-    # 如果是 lucky 插件，使用 pkg 方式
-    if [[ $PKG_NAME == "lucky" ]]; then
-        PKG_SPECIAL="master"  # 对 lucky 插件使用 pkg 处理方式
-    fi
-
     # 克隆 GitHub 仓库并指定标签或分支
     git clone --depth=1 --single-branch --branch $PKG_TAG "https://github.com/$PKG_REPO.git"
 
