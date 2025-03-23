@@ -24,11 +24,12 @@ fi
 
 # 修改 argon 主题字体和颜色
 if [ -d *"luci-theme-argon"* ]; then
-    cd ./luci-theme-argon/
+	cd ./luci-theme-argon/
 
-    sed -i "s/primary '.*'/primary '#43B3AE'/; s/'0.2'/'0.5'/; s/'none'/'bing'/" ./luci-app-argon-config/root/etc/config/argon
-    sed -i "s/font-family:.*;/font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; font-weight: normal;/" $(find ./ -type f -iname "*.css")
-    cd $PKG_PATH && echo "theme-argon has been fixed!"
+	sed -i "/font-weight:/ { /important/! { /\/\*/! s/:.*/: var(--font-weight);/ } }" $(find ./luci-theme-argon -type f -iname "*.css")
+	sed -i "s/primary '.*'/primary '#31a1a1'/; s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" ./luci-app-argon-config/root/etc/config/argon
+
+	cd $PKG_PATH && echo "theme-argon has been fixed!"
 fi
 
 # 禁用 LuCI 的 CSS minify 功能
